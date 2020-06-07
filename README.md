@@ -1,4 +1,4 @@
-# C-library with implementation of the Induction Motor rotor speed anf flux estimators
+# C-library with implementation of the Induction Motor rotor speed anf flux estimators (observers)
 
 * This embedded C-library provides the various types of [Induction Motor](https://en.wikipedia.org/wiki/Induction_motor) estimators to implementation the [FOC](https://en.wikipedia.org/wiki/Vector_control_(motor)) control systems:
 	* Sensored rotor flux (angle, magnitude) and back-EMF observer
