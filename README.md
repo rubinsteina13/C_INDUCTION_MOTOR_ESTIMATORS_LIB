@@ -19,7 +19,7 @@
 
 		#include "im_estimators.h"
 		
-		// Stator voltages and currents measurable values:
+		// Measurable values of stator voltages and currents:
 		float IsAl, IsBe, UsAl, UsBe;
 		
 		// Observable stator back-EMF values:
@@ -30,7 +30,7 @@
 		tIMstatObs sIMstatObs = IM_STAT_OBS_DEFAULTS;
 		
 		// 2nd step: do some settings
-		IMparams.fDt = 0.0001f;         // set the discretization (sapmle) time
+		IMparams.fDt = 0.0001f;         // set the discretization (sample) time
 		IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
 		IMparams.fRr = 4.516f;          // set the rotor resistance constant
 		IMparams.fRs = 50.0f;           // set the stator resistance constant
@@ -53,7 +53,7 @@
 
 		#include "im_estimators.h"
 		
-		// Stator currents measurable values:
+		// Measurable values of stator currents:
 		float IsAl, IsBe;
 		
 		// Rotor mechanical speed measurable value (Rad/Sec):
@@ -67,7 +67,7 @@
 		tIMrotObs IMrotObs = IM_ROT_OBS_DEFAULTS;
 		
 		// 2nd step: do some settings
-		IMparams.fDt = 0.0001f;         // set the discretization (sapmle) time
+		IMparams.fDt = 0.0001f;         // set the discretization (sample) time
 		IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
 		IMparams.fRr = 4.516f;          // set the rotor resistance constant
 		IMparams.fRs = 50.0f;           // set the stator resistance constant
@@ -89,7 +89,45 @@
 
 * Example 3 - Rotor speed and flux observer
 
-		//
+		// Measurable values of stator voltages and currents:
+		float IsAl, IsBe, UsAl, UsBe;
+		
+		// Observable rotot mechanical speed value (Rad/Sec):
+		float Wr;
+		
+		// Observable rotor flux values:
+		float Fang, Fmag;
+		
+		// 1st step: create and initialize the global variables of user data structures
+		tIMparams IMparams = IM_PARAMS_DEFAULTS;
+		tIMspeedObs sIMspeedObs = IM_SPEED_OBS_DEFAULTS;
+		
+		// 2nd step: do some settings
+		IMparams.fDt = 0.0001f;         // set the discretization (sample) time
+		IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
+		IMparams.fRr = 4.516f;          // set the rotor resistance constant
+		IMparams.fRs = 50.0f;           // set the stator resistance constant
+		IMparams.fLr = 0.143f;          // set the rotor inductance constant
+		IMparams.fLs = 0.143f;          // set the stator inductance constant
+		IMparams.fLm = 0.14f;           // set the magnetizing inductance constant
+		IMparams.m_init(&IMparams);     // call the initialization function of induction motor parameters
+		// configure the speed observer adapter based on PI-controller:
+		sIMspeedObs.sPI.fDtSec = IMparams.fDt; // set the discretization (sample) time for PI-controller
+		sIMspeedObs.sPI.fKp = 0.1f;     // set the proportional coefficient of PI-controller
+		sIMspeedObs.sPI.fKp = 0.01f;    // set the integral coefficient of PI-controller
+		sIMspeedObs.sPI.fUpOutLim = 300.0f; // set the PI-controller's output upper limit (Max rotor electrical speed value)
+		sIMspeedObs.sPI.fUpOutLim = -300.0f;// set the PI-controller's output lower limit (Min rotor electrical speed value)
+		
+		// 3rd step: Next code must be executed every time with IMparams.fDt period when 
+		// new calculation of rotor speed and flux values is needed
+		sIMspeedObs.fIsAl = IsAl;       // update the stator current Alpha
+		sIMspeedObs.fIsBe = IsBe;       // update the stator current Beta
+		sIMspeedObs.fUsAl = UsAl;       // update the stator voltage Alpha
+		sIMspeedObs.fUsBe = UsBe;       // update the stator voltage Beta
+		sIMspeedObs.m_calc(&sIMspeedObs, &IMparams); // call the rotor speed and flux observer function
+		Wr = sIMspeedObs.fWrE/IMparams.fNpP; // observed rotor mechanical speed
+		Fang = sIMspeedObs.fFrAng;      // observed rotor flux angle
+		Fmag = sIMspeedObs.fFrMagn;     // observed rotor flux magnitude
 
 # License
   
