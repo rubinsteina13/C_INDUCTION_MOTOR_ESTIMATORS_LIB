@@ -31,16 +31,16 @@
 		
 		// 2nd step: do some settings
 		IMparams.fDt = 0.0001f;         // set the discretization (sapmle) time
-	  IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
-	  IMparams.fRr = 4.516f;          // set the rotor resistance constant
-	  IMparams.fRs = 50.0f;           // set the stator resistance constant
-	  IMparams.fLr = 0.143f;          // set the rotor inductance constant
-	  IMparams.fLs = 0.143f;          // set the stator inductance constant
-	  IMparams.fLm = 0.14f;           // set the magnetizing inductance constant
-	  IMparams.m_init(&IMparams);     // call the initialization function of induction motor parameters
+		IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
+		IMparams.fRr = 4.516f;          // set the rotor resistance constant
+		IMparams.fRs = 50.0f;           // set the stator resistance constant
+		IMparams.fLr = 0.143f;          // set the rotor inductance constant
+		IMparams.fLs = 0.143f;          // set the stator inductance constant
+		IMparams.fLm = 0.14f;           // set the magnetizing inductance constant
+		IMparams.m_init(&IMparams);     // call the initialization function of induction motor parameters
 		
 		// 3rd step: Next code must be executed every time with IMparams.fDt period when 
-	  // new calculation of Stator back-EMF values is needed
+		// new calculation of Stator back-EMF values is needed
 		sIMstatObs.fIsAl = IsAl;        // update the stator current Alpha
 		sIMstatObs.fIsBe = IsBe;        // update the stator current Beta
 		sIMstatObs.fUsAl = UsAl;        // update the stator voltage Alpha
