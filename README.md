@@ -22,7 +22,7 @@
 		// Measurable values of stator voltages and currents:
 		float IsAl, IsBe, UsAl, UsBe;
 		
-		// Observable stator back-EMF values:
+		// Observable value of stator back-EMF:
 		float EsAl, EsBe;
 		
 		// 1st step: create and initialize the global variables of user data structures
@@ -56,10 +56,10 @@
 		// Measurable values of stator currents:
 		float IsAl, IsBe;
 		
-		// Rotor mechanical speed measurable value (Rad/Sec):
+		// Measurable value of rotor mechanical speed (Rad/Sec):
 		float Wr;
 		
-		// Observable rotor back-EMF and flux values:
+		// Observable values of rotor back-EMF and flux:
 		float ErAl, ErBe, Fang, Fmag;
 		
 		// 1st step: create and initialize the global variables of user data structures
@@ -92,10 +92,10 @@
 		// Measurable values of stator voltages and currents:
 		float IsAl, IsBe, UsAl, UsBe;
 		
-		// Observable rotot mechanical speed value (Rad/Sec):
+		// Observable value of rotot mechanical speed (Rad/Sec):
 		float Wr;
 		
-		// Observable rotor flux values:
+		// Observable values of rotor flux:
 		float Fang, Fmag;
 		
 		// 1st step: create and initialize the global variables of user data structures
