@@ -22,7 +22,7 @@
 		// Stator voltages and currents measurable values:
 		float IsAl, IsBe, UsAl, UsBe;
 		
-		// Observed stator back-EMF values:
+		// Observable stator back-EMF values:
 		float EsAl, EsBe;
 		
 		// 1st step: create and initialize the global variables of user data structures
@@ -45,13 +45,47 @@
 		sIMstatObs.fIsBe = IsBe;        // update the stator current Beta
 		sIMstatObs.fUsAl = UsAl;        // update the stator voltage Alpha
 		sIMstatObs.fUsBe = UsBe;        // update the stator voltage Beta
-		sIMstatObs.m_calc(&sIMstatObs); // call the Stator back-EMF observer function
+		sIMstatObs.m_calc(&sIMstatObs, &IMparams); // call the Stator back-EMF observer function
 		EsAl = sIMstatObs.fEsAl;        // observed stator back-EMF voltage Alpha
 		EsBe = sIMstatObs.fEsBe;        // observed stator back-EMF voltage Beta
 
 * Example 2 - Rotor flux and back-EMF observer
 
-		//
+		#include "im_estimators.h"
+		
+		// Stator currents measurable values:
+		float IsAl, IsBe;
+		
+		// Rotor mechanical speed measurable value (Rad/Sec):
+		float Wr;
+		
+		// Observable rotor back-EMF and flux values:
+		float ErAl, ErBe, Fang, Fmag;
+		
+		// 1st step: create and initialize the global variables of user data structures
+		tIMparams IMparams = IM_PARAMS_DEFAULTS;
+		tIMrotObs IMrotObs = IM_ROT_OBS_DEFAULTS;
+		
+		// 2nd step: do some settings
+		IMparams.fDt = 0.0001f;         // set the discretization (sapmle) time
+		IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
+		IMparams.fRr = 4.516f;          // set the rotor resistance constant
+		IMparams.fRs = 50.0f;           // set the stator resistance constant
+		IMparams.fLr = 0.143f;          // set the rotor inductance constant
+		IMparams.fLs = 0.143f;          // set the stator inductance constant
+		IMparams.fLm = 0.14f;           // set the magnetizing inductance constant
+		IMparams.m_init(&IMparams);     // call the initialization function of induction motor parameters
+		
+		// 3rd step: Next code must be executed every time with IMparams.fDt period when 
+		// new calculation of rotor back-EMF and flux values is needed
+		IMrotObs.fIsAl = IsAl;          // update the stator current Alpha
+		IMrotObs.fIsBe = IsBe;          // update the stator current Beta
+		IMrotObs.fWrE = Wr*IMparams.fNpP; // update the rotor electrical speed value
+		IMrotObs.m_calc(&IMrotObs, &IMparams); // call the rotor back-EMF and flux observer function
+		ErAl = IMrotObs.fErAl;          // observed rotor back-EMF voltage Alpha
+		ErBe = IMrotObs.fErBe;          // observed rotor back-EMF voltage Beta
+		Fang = atan2f(IMrotObs.fFrAl, IMrotObs.fFrBe); // observed rotor flux angle
+		Fmag = hypotf(IMrotObs.fFrAl, IMrotObs.fFrBe); // observed rotor flux magnitude
 
 * Example 3 - Rotor speed and flux observer
 
