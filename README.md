@@ -8,10 +8,10 @@
 * Project structure
 	* README.md - current file
 	* LICENSE - file with license description
-	* fp_pid.h - C-header file with user data types and function prototypes
-  * fp_pid.c - C-source file with firmware functions
-  * im_estimators.h - C-header file with user data types and function prototypes
-  * im_estimators.c - C-source file with firmware functions
+	* fp_pid.h - C-header file with user data types and function prototypes (P/I/D library)
+  * fp_pid.c - C-source file with firmware functions (P/I/D library)
+  * im_estimators.h - C-header file with user data types and function prototypes (Induction Motor estimators library)
+  * im_estimators.c - C-source file with firmware functions (Induction Motor estimators library)
 
 # HowToUse (example)
 
