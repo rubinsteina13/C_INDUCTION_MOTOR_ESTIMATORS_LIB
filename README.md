@@ -17,7 +17,37 @@
 
 * Example 1 - Stator back-EMF observer
 
-		//
+		#include "im_estimators.h"
+		
+		// Stator voltages and currents measurable values:
+		float IsAl, IsBe, UsAl, UsBe;
+		
+		// Observed stator back-EMF values:
+		float EsAl, EsBe;
+		
+		// 1st step: create and initialize the global variables of user data structures
+		tIMparams IMparams = IM_PARAMS_DEFAULTS;
+		tIMstatObs sIMstatObs = IM_STAT_OBS_DEFAULTS;
+		
+		// 2nd step: do some settings
+		IMparams.fDt = 0.0001f;         // set the discretization (sapmle) time
+	  IMparams.fNpP = 2.0f;           // set the count of stator pole pairs
+	  IMparams.fRr = 4.516f;          // set the rotor resistance constant
+	  IMparams.fRs = 50.0f;           // set the stator resistance constant
+	  IMparams.fLr = 0.143f;          // set the rotor inductance constant
+	  IMparams.fLs = 0.143f;          // set the stator inductance constant
+	  IMparams.fLm = 0.14f;           // set the magnetizing inductance constant
+	  IMparams.m_init(&IMparams);     // call the initialization function of induction motor parameters
+		
+		// 3rd step: Next code must be executed every time with IMparams.fDt period when 
+	  // new calculation of Stator back-EMF values is needed
+		sIMstatObs.fIsAl = IsAl;        // update the stator current Alpha
+		sIMstatObs.fIsBe = IsBe;        // update the stator current Beta
+		sIMstatObs.fUsAl = UsAl;        // update the stator voltage Alpha
+		sIMstatObs.fUsBe = UsBe;        // update the stator voltage Beta
+		sIMstatObs.m_calc(&sIMstatObs); // call the Stator back-EMF observer function
+		EsAl = sIMstatObs.fEsAl;        // observed stator back-EMF voltage Alpha
+		EsBe = sIMstatObs.fEsBe;        // observed stator back-EMF voltage Beta
 
 * Example 2 - Rotor flux and back-EMF observer
 
