@@ -5,6 +5,14 @@
 	* Sensorless stator back-EMF observer
 	* Sensorless rotor speed and flux (angle, magnitude) observer
 
+* Project structure
+	* README.md - current file
+	* LICENSE - file with license description
+	* fp_pid.h - C-header file with user data types and function prototypes
+  * fp_pid.c - C-source file with firmware functions
+  * im_estimators.h - C-header file with user data types and function prototypes
+  * im_estimators.c - C-source file with firmware functions
+
 # HowToUse (example)
 
 * Example 1 - Stator back-EMF observer
